@@ -90,8 +90,17 @@ int main(int argc, char **argv)
 
 SSL_CTX *initialize_ctx(char *keyfile, char *password) {
   //SSL init
+  
+  SSLCTX *ctx;
+  
   SSL_load_error_strings();
   SSL_library_init();
-
-  return NULL;
+  
+  ctx = SSL_CTX_new(/*put a method here*/);
+  
+  SSL_CTX_use_certificate_chain_file(ctx, keyfile);
+  
+  SSL_CTX_use_PrivateKey_file(ctx, keyfile, SSL_FILETYPE_PEM);
+  
+  return ctx;
 }
